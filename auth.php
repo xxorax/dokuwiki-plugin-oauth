@@ -227,7 +227,8 @@ class auth_plugin_oauth extends auth_plugin_authplain {
         if($user) {
             $sinfo = $this->getUserData($user);
             // check if the user allowed access via this service
-            if(!in_array($this->cleanGroup($servicename), $sinfo['grps'])) {
+            
+            if(!$this->getConf('singleService') && !in_array($this->cleanGroup($servicename), $sinfo['grps'])) {
                 msg(sprintf($this->getLang('authnotenabled'), $servicename), -1);
                 return false;
             }
